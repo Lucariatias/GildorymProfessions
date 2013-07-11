@@ -1,0 +1,11 @@
+name: GildorymProfessions
+author: Lucariatias
+version: 0.0.1
+main: com.gildorymrp.professions.GildorymProfessions
+commands:
+    getprofession:
+        description: Gets a player's profession
+        usage: /<command> (player)
+    setprofession:
+        description: Sets your profession
+        usage: /<command> [profession]
