@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.gildorymrp.api.Gildorym;
 import com.gildorymrp.api.plugin.core.Character;
 import com.gildorymrp.api.plugin.equipment.DnDMaterial;
 import com.gildorymrp.api.plugin.professions.GildorymProfessionsPlugin;
@@ -16,6 +17,7 @@ public class GildorymProfessions extends JavaPlugin implements GildorymProfessio
 	
 	@Override
 	public void onEnable() {
+		Gildorym.registerProfessionsPlugin(this);
 		this.getCommand("setprofession").setExecutor(new SetProfessionCommand(this));
 		this.getCommand("getprofession").setExecutor(new GetProfessionCommand(this));
 		for (Profession profession : Profession.values()) {
