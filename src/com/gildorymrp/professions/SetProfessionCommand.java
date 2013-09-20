@@ -19,18 +19,23 @@ public class SetProfessionCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		Player player = (Player) sender;
-		if (args.length >= 1) {
-			try {
-				Profession profession = Profession.valueOf(args[0].toUpperCase());
-				plugin.setProfession(player, profession);
-				sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.GREEN + "Set profession to " + profession.toString());
-			} catch (IllegalArgumentException exception) {
-				sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED + "That profession does not exist!");
+		Profession profession = Profession.valueOf(args[0].toUpperCase());
+		if (profession == null){
+			if (args.length >= 1) {
+				try {
+					plugin.setProfession(player, profession);
+					sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.GREEN + "Set profession to " + profession.toString());
+				} catch (IllegalArgumentException exception) {
+					sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED + "That profession does not exist!");
+				}
+			} else {
+				sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED + "You must specify a profession!");
 			}
-		} else {
-			sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED + "You must specify a profession!");
+			
+		}else{
+			sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED + "You may not change profession!");
 		}
-		return true;
+	return true;
 	}
-
+	
 }
