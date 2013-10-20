@@ -17,25 +17,52 @@ public class SetProfessionCommand implements CommandExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		Player player = (Player) sender;
-		Profession profession = Profession.valueOf(args[0].toUpperCase());
-		if (profession == null){
-			if (args.length >= 1) {
-				try {
-					plugin.setProfession(player, profession);
-					sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.GREEN + "Set profession to " + profession.toString());
-				} catch (IllegalArgumentException exception) {
-					sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED + "That profession does not exist!");
-				}
+	public boolean onCommand(CommandSender sender, Command cmd, String label,
+			String[] args) {
+
+		Player player = null;
+		if (args.length < 1) {
+			sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED
+					+ "You must specify a profession!");
+			return true;
+		} else if (args.length == 1) {
+			if (sender instanceof Player) {
+				player = (Player) sender;
 			} else {
-				sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED + "You must specify a profession!");
+				sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED
+						+ "Only a player can perform this command!");
+				return true;
 			}
-			
-		}else{
-			sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED + "You may not change profession!");
+		} else {
+			if (!sender.hasPermission("gildorym.setprofessionother")) {
+				sender.sendMessage(GildorymProfessions.PREFIX
+						+ ChatColor.RED
+						+ "You do not have permission to change another player's profession!");
+			}
+			player = sender.getServer().getPlayer(args[1]);
+			if (player == null) {
+				sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED
+						+ "That player does not exist!");
+			}
 		}
-	return true;
+
+		Profession profession = Profession.valueOf(args[0].toUpperCase());
+		if (plugin.getProfession(player) != null
+				&& !sender.hasPermission("gildorym.setprofessionother")) {
+			sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED
+					+ "You already have a profession!");
+		}
+
+		try {
+			plugin.setProfession(player, profession);
+			sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.GREEN
+					+ "Set profession to " + profession.toString());
+		} catch (IllegalArgumentException exception) {
+			sender.sendMessage(GildorymProfessions.PREFIX + ChatColor.RED
+					+ "That profession does not exist!");
+		}
+
+		return true;
 	}
-	
+
 }

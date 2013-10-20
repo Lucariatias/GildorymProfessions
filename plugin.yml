@@ -1,5 +1,5 @@
 name: GildorymProfessions
-author: Lucariatias
+author: Lucariatias, Hohahihehu
 version: 0.0.1
 main: com.gildorymrp.professions.GildorymProfessions
 commands:
@@ -8,4 +8,8 @@ commands:
         usage: /<command> (player)
     setprofession:
         description: Sets your profession
-        usage: /<command> [profession]
+        usage: /<command> [profession] (player)
+permissions:
+    gildorym.setprofessionother:
+        description: Allows you set another player's profession or change your current profession
+        default: op
